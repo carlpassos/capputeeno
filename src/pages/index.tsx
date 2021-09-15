@@ -1,7 +1,7 @@
 
-import { CatalogPagination } from '../components/CatalogPagination'
-import { ProductCatalog } from '../components/ProductCatalog'
-import { OrderByMenu } from '../components/OrderByMenu'
+import { CatalogPagination } from '../components/Catalog/CatalogPagination'
+import { ProductCatalog } from '../components/Catalog/ProductCatalog'
+import { OrderByMenu } from '../components/Catalog/OrderByMenu'
 import {
   Container,
   FilterSection,

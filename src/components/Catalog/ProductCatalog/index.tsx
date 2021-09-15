@@ -5,8 +5,8 @@ import {
   ProductCard,
 } from './styles'
 
-import { formatPrice } from '../../utils/formatPrice';
-import { products } from '../../utils/products'
+import { formatPrice } from '../../../utils/formatPrice';
+import { products } from '../../../utils/products'
 
 const productImageLoader = ({ src, width, quality }) => {
   return `/${src}?w=${width}&q=${quality || 75}`
