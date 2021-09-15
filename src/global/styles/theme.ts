@@ -3,11 +3,13 @@ const theme = {
     brand: {
       blue: '#115D8C',
       orange: '#F25D27',
+      orangeLow: '#FFA585',
       red: '#DE3838'
     },
     texts: {
       dark: '#41414D',
-      light: '#617480'
+      light: '#617480',
+      suport: '#737380',
     },
     shapes: {
       primary: '#FFFFFF',
