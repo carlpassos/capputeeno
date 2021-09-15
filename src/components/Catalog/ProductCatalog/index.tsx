@@ -1,4 +1,6 @@
+import Link from 'next/link'
 import Image from 'next/image'
+
 
 import {
   Container,
@@ -18,20 +20,22 @@ export function ProductCatalog() {
     <Container>
 
       {products.map(item => (
-        <ProductCard key={item.key}>
-            <Image
-              loader={productImageLoader}
-              src={item.imageUrl}
-              alt={item.name}
-              width={256}
-              height={300}
-              objectFit="cover"
-            />
-          <div>
-            <p>{item.name}</p>
-            <span>{formatPrice(item.price)}</span>
-          </div>
-        </ProductCard>
+        <Link href="/product/product-id-here" key={item.key}>
+          <ProductCard >
+              <Image
+                loader={productImageLoader}
+                src={item.imageUrl}
+                alt={item.name}
+                width={256}
+                height={300}
+                objectFit="cover"
+              />
+            <div>
+              <p>{item.name}</p>
+              <span>{formatPrice(item.price)}</span>
+            </div>
+          </ProductCard>
+        </Link>
       ))}
     </Container>
   )
