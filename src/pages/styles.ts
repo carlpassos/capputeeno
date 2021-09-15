@@ -15,12 +15,13 @@ import styled from 'styled-components';
     justify-content: space-between;
     align-items: center;
 
-    width: 100%
+    width: 100%;
+    margin-bottom: 16px;
   `;
 
   export const ProductTypeNav = styled.nav`
     &>ul {
-      
+
       li {
         cursor: pointer;
         display: inline;

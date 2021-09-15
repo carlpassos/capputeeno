@@ -14,7 +14,9 @@ const theme = {
     shapes: {
       primary: '#FFFFFF',
       secondary: '#DCE2E6',
+      pageBackground: '#F0F0F5',
       background: '#E1E1E6',
+      primaryButton: '#E9E9F0',
       searchbar: '#F3F5F6'
     }
 
