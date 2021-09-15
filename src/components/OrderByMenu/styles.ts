@@ -40,6 +40,8 @@ import styled from 'styled-components';
 
     background-color: ${({theme}) => theme.colors.shapes.primary};
 
+    z-index: 2;
+
     
 
     &>ul {
