@@ -1,6 +1,6 @@
 
 import { CatalogPagination } from '../components/CatalogPagination'
-import { CatalogProducts } from '../components/CatalogProducts'
+import { ProductCatalog } from '../components/ProductCatalog'
 import { OrderByMenu } from '../components/OrderByMenu'
 import {
   Container,
@@ -22,7 +22,7 @@ export default function Home() {
         <OrderByMenu />
       </FilterSection>
       <CatalogPagination />
-      <CatalogProducts />
+      <ProductCatalog />
       <CatalogPagination />
     </Container>
   )
