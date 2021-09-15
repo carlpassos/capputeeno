@@ -8,7 +8,6 @@ import styled from 'styled-components';
     
     width: 100%;
     min-height: 100vh;
-    background-color: ${({theme}) => theme.colors.shapes.pageBackground};
   `;
 
   export const Header = styled.header`
