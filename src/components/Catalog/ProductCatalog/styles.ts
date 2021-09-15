@@ -14,6 +14,7 @@ import styled from 'styled-components'
     background-color: ${({theme}) => theme.colors.shapes.primary};
     border-radius: 8px 8px 4px 4px;
     overflow: hidden;
+    cursor: pointer;
 
     &>img {
       width: 100%;
