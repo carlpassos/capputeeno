@@ -28,6 +28,7 @@ import styled from 'styled-components';
 
       &>svg {
         width: 215px;
+        cursor: pointer;
       }
       
     }
@@ -43,6 +44,7 @@ import styled from 'styled-components';
     align-items: center;
     justify-content: center;
     position: relative;
+    cursor: pointer;
 
     width: 42px;
     height: 42px;

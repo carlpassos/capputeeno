@@ -1,5 +1,7 @@
 import { ReactNode } from 'react'
 
+import Link from 'next/link'
+
 import Logo from '../../../public/logo-capputeeno.svg'
 import ShoppingBag from '../../../public/shopping-bag.svg'
 import { SearchBar } from '../../components/SearchBar'
@@ -21,15 +23,19 @@ export function DefaultTheme({children}: DefaultProps) {
     <Container>
       <Header>
         <div>
-          <Logo />
+          <Link href="/" passHref>
+            <Logo />
+          </Link>
           <LeftSideElements>
             <SearchBar />
+            <Link href="/cart" passHref>
             <Cart>
               <ShoppingBag />
               <span>
                 2
               </span>
             </Cart>
+            </Link>
           </LeftSideElements>
         </div>
       </Header>
