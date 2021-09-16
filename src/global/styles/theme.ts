@@ -4,7 +4,8 @@ const theme = {
       blue: '#115D8C',
       orange: '#F25D27',
       orangeLow: '#FFA585',
-      red: '#DE3838'
+      red: '#DE3838',
+      green: '#51B853',
     },
     texts: {
       dark: '#41414D',

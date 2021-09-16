@@ -32,29 +32,73 @@ export const CartContent = styled.div`
 `;
 
 export const Resume = styled.div`
-  height: 100%;
+  display: flex;
+  flex-direction: column;
+  height: calc(100vh - 110px);
 
   padding: 16px 24px;
   background-color: ${({theme}) => theme.colors.shapes.primary };
+  font-size: 16px;
+  font-size: 300;
 
-  position: -webkit-sticky; /* Safari */
-  /* top: 40px; */
+  top: 60px;
+  position: -webkit-sticky;
+  position: sticky;
+
+  &>h3 {
+    font-weight: 600;
+    font-size: 20px;
+    margin-bottom: 29px;
+  }
 `;
 
 export const ResumeInfo = styled.div`
   display: flex;
   width: 100%;
   justify-content: space-between;
+  margin-bottom: 12px;
 `;
 
 export const ResumeTotal = styled.div`
-
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  margin-top: 12px;
+  margin-bottom: 40px;
+  border-top: 1px solid #DCE2E6;
+  padding-top: 8px;
+  font-weight: 600;
 `;
 
 export const BuyButton = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 4px;
+  width: 100%;
+  height: 40px;
+  
+  color: #fff;
+  background-color: ${({theme}) => theme.colors.brand.green};
+  text-transform: uppercase;
+  font-weight: 500;
+  font-size: 16px;
 
-`;
+  cursor: pointer;
+  `;
 
-export const HelpMenu = styled.div`
+export const HelpMenu = styled.ul`
+  display: flex;
+  flex-direction: column;
+  margin-top: auto;
+  justify-self: flex-end;
 
+  color: #737380;
+  text-decoration: underline;
+  text-transform: uppercase;
+
+  &>li {
+    margin-bottom: 12px;
+    cursor: pointer;
+  }
 `;
