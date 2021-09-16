@@ -74,6 +74,9 @@ import styled from 'styled-components';
 
   export const Content = styled.div`
     padding: 34px 0px;
+
+    max-height: 100%;
+    height: 1000px;
     flex: 1;
     width: 100%;
     max-width: 1120px;

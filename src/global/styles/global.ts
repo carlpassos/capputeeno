@@ -9,6 +9,12 @@ export default createGlobalStyle`
     font-family: 'Saira', sans-serif;
   }
 
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
+
   button {
     border:0;
     background-color: transparent;
@@ -38,4 +44,5 @@ export default createGlobalStyle`
   q:before, q:after {
       content:'';
   }
+
 `;
