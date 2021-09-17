@@ -25,10 +25,13 @@ import styled from 'styled-components';
       
       width: 100%;
       max-width: 1120px;
-
+      &>.logoContainer {
+        display: flex;
+        align-items: center;
+        cursor: pointer;
+      }
       &>svg {
         width: 215px;
-        cursor: pointer;
       }
       
     }

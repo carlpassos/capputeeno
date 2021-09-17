@@ -24,7 +24,9 @@ export function DefaultTheme({children}: DefaultProps) {
       <Header>
         <div>
           <Link href="/" passHref>
-            <Logo />
+            <div className="logoContainer">
+              <Logo />
+            </div>
           </Link>
           <LeftSideElements>
             <SearchBar />
