@@ -10,6 +10,10 @@ export const Container = styled.div`
     display: flex;
     align-items: center;
 
+    &>span {
+      margin: 0 7px;
+    }
+
     li.backArrow {
       margin-left: 6px;;
     }

@@ -2,17 +2,71 @@ import { IoIosArrowBack, IoIosArrowForward } from 'react-icons/io'
 
 import { Container } from './styles'
 
-export function CatalogPagination() {
+interface PaginationProps {
+  totalCountOfRegisters: number;
+  registersPerPage?: number;
+  currentPage?: number;
+  onPageChange: (page: number) => void;
+}
+
+const siblingsCount = 4;
+
+function createPagesArray(from: number, to: number) {
+  return [...new Array(to - from)]
+  .map((_, index) => {
+    return from + index + 1;
+  })
+  .filter(page => page > 0)
+}
+
+export function CatalogPagination({
+  totalCountOfRegisters,
+  registersPerPage = 12,
+  currentPage = 1,
+  onPageChange
+}: PaginationProps) {
+
+  const lastPage = Math.floor(totalCountOfRegisters / registersPerPage);
+  
+  const previousPages = currentPage > 1
+    ? createPagesArray(currentPage - 1 - siblingsCount, currentPage - 1)
+    : []
+
+  const nextPages = currentPage < lastPage
+    ? createPagesArray(currentPage, Math.min(currentPage + siblingsCount, lastPage))
+    : []
+
+
   return (
     <Container>
       <ul>
-        <li className="current">1</li>
-        <li>2</li>
-        <li>3</li>
-        <li>4</li>
-        <li>5</li>
-        <li className="backArrow"><IoIosArrowBack /></li>
-        <li><IoIosArrowForward /></li>
+
+        {currentPage > (1 + siblingsCount) && (
+          <>
+            <li onClick={() => onPageChange(1)}>1</li>
+            {currentPage > (2 + siblingsCount) && <span>...</span>}
+          </>
+        )}
+
+        {previousPages.length > 0 && previousPages.map(page => {
+          return <li key={`previouspagekey${page}`} onClick={() => onPageChange(page)}>{page}</li>
+        })}
+
+        <li onClick={() => onPageChange(currentPage)} className="current" >{currentPage}</li>
+
+        {nextPages.length > 0 && nextPages.map(page => {
+          return <li key={`previouspagekey${page}`} onClick={() => onPageChange(page)}>{page}</li>
+        })}
+
+        {(currentPage + siblingsCount) < lastPage && (
+          <>
+            {(currentPage + 1 + siblingsCount) < lastPage && <span>...</span>}
+            <li onClick={() => onPageChange(lastPage)}>{lastPage}</li>
+          </>
+        )}
+
+        <li onClick={() => {currentPage > 1 && onPageChange(currentPage - 1)}} className="backArrow"><IoIosArrowBack /></li>
+        <li onClick={() => {currentPage < lastPage &&onPageChange(currentPage + 1)}}><IoIosArrowForward /></li>
       </ul>
     </Container>
   )
