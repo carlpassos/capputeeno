@@ -23,6 +23,12 @@ import styled from 'styled-components'
     flex-direction: column;
 
     color: ${({theme}) => theme.colors.texts.dark};
+
+    &>span {
+      display: flex;
+      justify-self: flex-end;
+      margin-top: auto;
+    }
   `;
 
   export const ProductHeader = styled.div`
