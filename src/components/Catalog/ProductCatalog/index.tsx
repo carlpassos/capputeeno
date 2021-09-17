@@ -15,21 +15,23 @@ import { request, gql } from "graphql-request";
 import { useEffect, useState } from 'react';
 import { useProducts } from '../../../services/hooks/useProducts';
 import { CatalogPagination } from '../CatalogPagination';
-import { filterDataProp } from '../../../pages';
+import { filterDataProp, orderDataProp } from '../../../pages';
+import { CatalogLoad } from '../../Loads/Catalog';
 
 
 interface ProductCatalogProps {
   filter?: filterDataProp;
+  order: orderDataProp;
 }
 
-export function ProductCatalog({filter = "all"}: ProductCatalogProps) {
+export function ProductCatalog({filter = "all", order = 0}: ProductCatalogProps) {
 
   const router = useRouter()
   const { page } = router.query
 
   const [currentPage, setCurrentPage] = useState(page ? Number(page) : 1)
   
-  const {data, isLoading, error } = useProducts(currentPage, filter);
+  const {data, isLoading, error } = useProducts(currentPage, filter, order);
 
   function changePage(page: number) {
     if (currentPage !== page) {
@@ -47,7 +49,7 @@ export function ProductCatalog({filter = "all"}: ProductCatalogProps) {
   return (
     <>
       {isLoading ? (
-        <div>carregando...</div>
+        <CatalogLoad />
       ) : error ? (
         <div>ocorreu um erro</div>
       ) : (

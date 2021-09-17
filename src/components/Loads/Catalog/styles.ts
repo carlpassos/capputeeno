@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 
-  export const Container = styled.div`
+export const Container = styled.div`
     gap: 32px;
     display: grid;
     grid-template-columns: 1fr 1fr 1fr 1fr;
@@ -8,22 +8,18 @@ import styled from 'styled-components'
   `;
 
   export const ProductCard = styled.div`
+    &>span {
+      display: block;
+      margin-top: -6px;
+    }
 
     background-color: ${({theme}) => theme.colors.shapes.primary};
     border-radius: 8px 8px 4px 4px;
     overflow: hidden;
-    cursor: pointer;
-
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-
-    &:hover {
-      transform: scale(1.05);
-      box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
-    }
 
     &>img {
       width: 100%;
-      /* height: 500px; */
+      height: 500px;
       object-fit: contain;
     }
 
@@ -43,5 +39,18 @@ import styled from 'styled-components'
         font-size: 14px;
         display: inline-block;
       }
+    }
+  `;
+
+  export const FakeCatalogPagination = styled.ul`
+    display: flex;
+    align-self: flex-end;
+
+    li {
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      margin-left: 5px;
+      background-color: ${({theme}) => theme.colors.shapes.primaryButton};
     }
   `;

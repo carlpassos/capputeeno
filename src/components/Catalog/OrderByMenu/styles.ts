@@ -4,7 +4,7 @@ import styled from 'styled-components';
     isOpened: boolean;
   }
 
-  export const Container = styled.div`
+  export const Container = styled.div<DropDownProps>`
     display: flex;
     align-items: center;
     justify-content: center;
@@ -14,16 +14,32 @@ import styled from 'styled-components';
 
     font-size: 14px;
     color: ${({theme}) => theme.colors.texts.suport};
-
+    
+    
+    .dropDownTextOpened {
+      background-color: ${({ theme }) => theme.colors.shapes.background};
+    }
+    
     .dropDownText {
       display: flex;
       align-items: center;
       cursor: pointer;
+      border-radius: 4px;
+      background-color: ${({ isOpened, theme }) => !isOpened ? "transparent" : theme.colors.shapes.background};
+
+      transition: background-color 0.3s ease;
+      padding: 5px 10px;
 
       svg {
         margin-left: 8px;
       }
+
+      &:hover {
+        background-color: ${({ theme }) => theme.colors.shapes.background};
+      }
     }
+
+    
   `;
 
   export const DropDownMenu = styled.div<DropDownProps>`

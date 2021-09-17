@@ -1,5 +1,4 @@
 
-import { CatalogPagination } from '../components/Catalog/CatalogPagination'
 import { ProductCatalog } from '../components/Catalog/ProductCatalog'
 import { OrderByMenu } from '../components/Catalog/OrderByMenu'
 import {
@@ -11,6 +10,7 @@ import { useState } from 'react'
 import { useRouter } from 'next/router'
 
 export type filterDataProp = "mugs" | "t-shirts" | "all"
+export type orderDataProp = 0 | 1 | 2 | 3 | 4
 
 interface filterMenuOptionProps {
   category: filterDataProp;
@@ -28,9 +28,15 @@ export default function Home() {
   const router = useRouter()
 
   const [filterOption, setFilterOption] = useState<filterDataProp>("all")
+  const [order, setOrder] = useState<orderDataProp>(0)
 
   function changeFilter(category: filterDataProp) {
     setFilterOption(category)
+    router.push('?page=1')
+  }
+
+  function changeOrder(order: orderDataProp) {
+    setOrder(order)
     router.push('?page=1')
   }
 
@@ -48,9 +54,9 @@ export default function Home() {
             })}
           </ul>
         </ProductTypeNav>
-        <OrderByMenu />
+        <OrderByMenu currentOrder={order} onOrderChange={(orderIndex: orderDataProp) => setOrder(orderIndex)} />
       </FilterSection>
-      <ProductCatalog filter={filterOption}/>
+      <ProductCatalog filter={filterOption} order={order}/>
     </Container>
   )
 }

@@ -1,6 +1,6 @@
 import { useQuery } from 'react-query'
 import {request, gql} from 'graphql-request'
-import { filterDataProp } from '../../pages'
+import { filterDataProp, orderDataProp } from '../../pages'
 
 type Products = {
   id: string;
@@ -15,13 +15,22 @@ type getProductsResponse = {
   count: number,
 }
 
-async function getProducts(page: number, filter: filterDataProp): Promise<getProductsResponse> {
+const orderData = {
+  1: `sortField: "created_at", sortOrder: "DESC"`,
+  2: `sortField: "price_in_cents", sortOrder: "DESC"`,
+  3: `sortField: "price_in_cents", sortOrder: "ASC"`,
+  4: `sortField: "sales", sortOrder: "DESC"`,
+}
+  
+
+async function getProducts(page: number, filter: filterDataProp, order: orderDataProp): Promise<getProductsResponse> {
       const formatedFilter = filter !== "all" ? `, filter:{category: "${filter}"}` : ""
+      const formatedOrder = order !== 0 ? `, ${orderData[order]}` : ""
       const response = await request(
         process.env.API_URL,
         gql`
           query {
-            allProducts(perPage: 12, page: ${page - 1}${formatedFilter} ) {
+            allProducts(perPage: 12, page: ${page - 1}${formatedFilter}${formatedOrder}) {
               id
               name
               image_url
@@ -53,9 +62,9 @@ async function getProducts(page: number, filter: filterDataProp): Promise<getPro
     }
 
 
-export function useProducts(page: number, filter: filterDataProp) {
+export function useProducts(page: number, filter: filterDataProp, order: orderDataProp) {
 
-  return useQuery(['products', page, filter], () => getProducts(page, filter),{
+  return useQuery(['products', page, filter, order], () => getProducts(page, filter, order),{
     staleTime: 1000 * 60 * 10, // 10 minutes
   })
 }
