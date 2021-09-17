@@ -9,7 +9,7 @@ interface PaginationProps {
   onPageChange: (page: number) => void;
 }
 
-const siblingsCount = 4;
+const siblingsCount = 5;
 
 function createPagesArray(from: number, to: number) {
   return [...new Array(to - from)]
@@ -26,7 +26,7 @@ export function CatalogPagination({
   onPageChange
 }: PaginationProps) {
 
-  const lastPage = Math.floor(totalCountOfRegisters / registersPerPage);
+  const lastPage = Math.round(totalCountOfRegisters / registersPerPage);
   
   const previousPages = currentPage > 1
     ? createPagesArray(currentPage - 1 - siblingsCount, currentPage - 1)
@@ -51,7 +51,6 @@ export function CatalogPagination({
         {previousPages.length > 0 && previousPages.map(page => {
           return <li key={`previouspagekey${page}`} onClick={() => onPageChange(page)}>{page}</li>
         })}
-
         <li onClick={() => onPageChange(currentPage)} className="current" >{currentPage}</li>
 
         {nextPages.length > 0 && nextPages.map(page => {

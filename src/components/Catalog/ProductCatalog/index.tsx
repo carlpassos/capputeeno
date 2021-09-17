@@ -15,15 +15,21 @@ import { request, gql } from "graphql-request";
 import { useEffect, useState } from 'react';
 import { useProducts } from '../../../services/hooks/useProducts';
 import { CatalogPagination } from '../CatalogPagination';
+import { filterDataProp } from '../../../pages';
 
-export function ProductCatalog() {
+
+interface ProductCatalogProps {
+  filter?: filterDataProp;
+}
+
+export function ProductCatalog({filter = "all"}: ProductCatalogProps) {
 
   const router = useRouter()
   const { page } = router.query
 
   const [currentPage, setCurrentPage] = useState(page ? Number(page) : 1)
   
-  const {data, isLoading, error } = useProducts(currentPage);
+  const {data, isLoading, error } = useProducts(currentPage, filter);
 
   function changePage(page: number) {
     if (currentPage !== page) {
@@ -63,7 +69,7 @@ export function ProductCatalog() {
                     objectFit="cover"
                   />
                 <div>
-                  <p>{item.name}</p>
+                  <p>{item.name}{item.category}</p>
                   <span>{formatPrice(item.price)}</span>
                 </div>
               </ProductCard>

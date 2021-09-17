@@ -30,6 +30,11 @@ import styled from 'styled-components';
         font-weight: 400;
         text-transform: uppercase;
         color: ${({theme}) => theme.colors.texts.suport};
+        transition: color 0.3s ease;
+      }
+
+      li:hover:not(.current) {
+        color: ${({theme}) => theme.colors.texts.dark};
       }
 
       li.current {
