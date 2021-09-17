@@ -21,9 +21,7 @@ export default function Home() {
         </ProductTypeNav>
         <OrderByMenu />
       </FilterSection>
-      <CatalogPagination />
       <ProductCatalog />
-      <CatalogPagination />
     </Container>
   )
 }
