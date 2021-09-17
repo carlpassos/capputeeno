@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import { useRouter } from 'next/router';
 import Image from 'next/image'
 
 
@@ -17,9 +18,25 @@ import { CatalogPagination } from '../CatalogPagination';
 
 export function ProductCatalog() {
 
-  const [currentPage, setCurrentPage] = useState(1)
+  const router = useRouter()
+  const { page } = router.query
 
+  const [currentPage, setCurrentPage] = useState(page ? Number(page) : 1)
+  
   const {data, isLoading, error } = useProducts(currentPage);
+
+  function changePage(page: number) {
+    if (currentPage !== page) {
+      setCurrentPage(page)
+      router.push(`?page=${page}`)
+    }
+  }
+
+  useEffect(() => { 
+    if (page && currentPage !== Number(page)){
+      setCurrentPage(Number(page))
+    }
+   }, [page])
 
   return (
     <>
@@ -32,7 +49,7 @@ export function ProductCatalog() {
         <CatalogPagination
           totalCountOfRegisters={data.count}
           currentPage={currentPage}
-          onPageChange={setCurrentPage}
+          onPageChange={changePage}
         />
         <Container>
           {data.products.map(item => (
@@ -56,7 +73,7 @@ export function ProductCatalog() {
           <CatalogPagination
             totalCountOfRegisters={data.count}
             currentPage={currentPage}
-            onPageChange={setCurrentPage}
+            onPageChange={changePage}
           /> 
         </>
       )}
