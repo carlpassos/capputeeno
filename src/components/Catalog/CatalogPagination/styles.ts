@@ -15,13 +15,13 @@ export const Container = styled.div`
     }
 
     li.backArrow {
-      margin-left: 6px;;
+      margin-left: 6px;
     }
 
     li.current {
       background-color: ${({theme}) => theme.colors.shapes.primary};
       border: 1px solid ${({theme}) => theme.colors.brand.orangeLow};
-      
+      cursor: default;
       color: ${({theme}) => theme.colors.brand.orangeLow};
     }
 
@@ -40,6 +40,11 @@ export const Container = styled.div`
       font-size: 16px;
       color: ${({theme}) => theme.colors.texts.light};
       cursor: pointer;
+      transition: background-color 0.3s ease;
+
+      &:hover:not(.current) {
+        background-color: #dedde2;
+      }
     }
   }
 `
