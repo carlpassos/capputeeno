@@ -31,7 +31,7 @@ import styled from 'styled-components';
     position: absolute;
 
     width: auto;
-    min-width: 146px;
+    min-width: 176px;
     border-radius: 4px;
     box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
     top: 28px;
