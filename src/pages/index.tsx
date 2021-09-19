@@ -5,7 +5,7 @@ import {
   Container,
   FilterSection,
   ProductTypeNav,
-} from './styles'
+} from '../global/styles/pages'
 import { useState } from 'react'
 import { useRouter } from 'next/router'
 
