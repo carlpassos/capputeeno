@@ -15,7 +15,7 @@ import {
   ResumeTotal,
   BuyButton,
   HelpMenu,
-} from './styles'
+} from '../../global/styles/pages/cart'
 
 export default function Cart() {
 
