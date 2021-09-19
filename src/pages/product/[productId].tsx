@@ -14,8 +14,7 @@ import {
   ProductHeader,
   Description,
   AddToCartButton,
-
-} from './styles'
+} from '../../global/styles/pages/product'
 import { useContext } from 'react';
 import { cartContext } from '../../context/cartContext';
 
