@@ -45,6 +45,11 @@ export const ImageSide = styled.div`
 
 export const CartItemContent = styled.div`
 
+  a {
+    color: ${({theme}) => theme.colors.texts.dark} !important;
+    text-decoration: none;
+  }
+
   @media (max-width: 720px) {
     padding-bottom: 20px;
     div {

@@ -1,4 +1,5 @@
 import Image from 'next/image'
+import Link from 'next/link'
 
 import {
   Container,
@@ -62,7 +63,7 @@ export function CartItems({
                 {isLoading ?
                   <Skeleton width={200} />
                   :
-                  <>{item.name}</>
+                  <><Link href={`/product/${item.id}`}>{item.name}</Link></>
                 }
                 
                 <div onClick={() => removeFromCart(item.id)}>
