@@ -1,6 +1,5 @@
 import { useQuery } from 'react-query'
 import {request, gql} from 'graphql-request'
-import { filterDataProp, orderDataProp } from '../../pages'
 
 type ProductData = {
   id: string;
@@ -18,34 +17,41 @@ const categoryName = {
   
 
 async function getProduct(productId: string): Promise<ProductData> {
-        const response = await request(
-          process.env.API_URL,
-          gql`
-            query {
-              Product(id: "${productId}") {
-                id
-                name
-                description
-                image_url
-                price_in_cents
-                category
-              }
-            }
-          `
-        )
-        const product = {
-          id: response.Product.id,
-          name: response.Product.name,
-          category: categoryName[response.Product.category],
-          imageUrl: response.Product.image_url,
-          description: response.Product.description,
-          price: response.Product.price_in_cents / 100
-        }
-    
-        return product
+       
+  if (productId !== "undefined") {
 
-      
-    } 
+  
+  const response = await request(
+      process.env.API_URL,
+      gql`
+        query {
+          Product(id: "${productId}") {
+            id
+            name
+            description
+            image_url
+            price_in_cents
+            category
+          }
+        }
+      `
+    )
+    const product = {
+      id: response.Product.id,
+      name: response.Product.name,
+      category: categoryName[response.Product.category],
+      imageUrl: response.Product.image_url,
+      description: response.Product.description,
+      price: response.Product.price_in_cents / 100
+    }
+
+    return product
+  }
+
+  throw "product loading or undefined"
+
+  
+} 
 
 
 export function useProduct(productId: string) {

@@ -16,6 +16,8 @@ import {
   AddToCartButton,
 
 } from './styles'
+import { useContext } from 'react';
+import { cartContext } from '../../context/cartContext';
 
 const productImageLoader = ({ src, width, quality }) => {
   return `/${src}?w=${width}&q=${quality || 75}`
@@ -25,7 +27,13 @@ export default function Product() {
   const router = useRouter()
   const { productId } = router.query
 
-  const {data, isLoading, error } = useProduct(String(productId));
+  const {data, isLoading, error, isFetching } = useProduct(String(productId));
+
+  const { addToCart } = useContext(cartContext)
+
+  function addProductToCart(id: string) {
+    addToCart(id);
+  }
 
   return (
     <Container>
@@ -83,9 +91,9 @@ export default function Product() {
                 </p>
               </Description>
               
-              {isLoading ?
+              {isLoading || isFetching ?
                 <Skeleton height={40} /> :
-                <AddToCartButton>
+                <AddToCartButton onClick={() => addProductToCart(data.id)}>
                   <ShoppingBag />
                   Adicionar ao carrinho
                 </AddToCartButton>

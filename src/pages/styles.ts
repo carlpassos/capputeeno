@@ -1,6 +1,21 @@
 import styled from 'styled-components';
 
   export const Container = styled.div`
+    @media (max-width: 1200px) {
+      max-width: 904px !important;
+      
+    }
+
+    @media (max-width: 920px) {
+      max-width: 592px !important;
+      
+    }
+
+    @media (max-width: 506px) {
+      max-width: 380px !important;
+      
+    }
+    margin: 0 auto;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -11,6 +26,11 @@ import styled from 'styled-components';
   `;
 
   export const FilterSection = styled.div`
+
+    @media (max-width: 720px) {
+      flex-direction: column;
+    }
+
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -20,9 +40,20 @@ import styled from 'styled-components';
   `;
 
   export const ProductTypeNav = styled.nav`
+
+    @media (max-width: 720px) {
+      margin-bottom: 18px
+    }
+
     &>ul {
 
       li {
+
+        @media (max-width: 720px) {
+          font-size: 13px;
+          margin-right: 15px;
+        }
+
         cursor: pointer;
         display: inline;
         margin-right: 40px;

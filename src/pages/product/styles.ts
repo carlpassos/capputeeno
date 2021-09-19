@@ -7,6 +7,11 @@ import styled from 'styled-components'
   
   export const Content = styled.div`
     display: grid;
+    
+    @media (max-width: 720px) {
+      grid-template-columns: 1fr;
+    }
+
     grid-template-columns: 1.5fr 1fr;
     gap: 32px;
     margin-top: 22px;
@@ -66,6 +71,8 @@ import styled from 'styled-components'
   `;
 
   export const Description = styled.div`
+    
+
     &>h3 {
       text-transform: uppercase;
       font-weight: 500;
@@ -79,6 +86,7 @@ import styled from 'styled-components'
     p {
       font-weight: 400;
       font-size: 14px;
+      margin-bottom: 20px
     }
   `;
 
@@ -88,6 +96,7 @@ import styled from 'styled-components'
     justify-content: center;
     justify-self: flex-end;
     margin-top: auto;
+    cursor: pointer;
 
     height: 44px;
     background-color: ${({theme}) => theme.colors.brand.blue};
@@ -97,9 +106,13 @@ import styled from 'styled-components'
     text-transform: uppercase;
     font-weight: 400;
 
-
-
     width: 100%;
+
+    transition: transform 0.3s ease;
+
+    &:hover {
+      transform: scale(1.05)
+    }
 
     &>svg {
       margin-right: 8px;

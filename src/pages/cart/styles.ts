@@ -1,6 +1,11 @@
 import styled from 'styled-components'
 
 export const Container = styled.div`
+
+  @media (max-width: 1024px) {
+    grid-template-columns: 1fr;
+  }
+
   display: grid;
   gap: 32px;
   grid-template-columns: auto 352px;
@@ -32,6 +37,10 @@ export const CartContent = styled.div`
 `;
 
 export const Resume = styled.div`
+
+  @media (max-width: 1024px) {
+    height: auto;
+  }
   display: flex;
   flex-direction: column;
   height: calc(100vh - 110px);
@@ -77,6 +86,7 @@ export const BuyButton = styled.div`
   border-radius: 4px;
   width: 100%;
   height: 40px;
+  margin-bottom: 20px;
   
   color: #fff;
   background-color: ${({theme}) => theme.colors.brand.green};

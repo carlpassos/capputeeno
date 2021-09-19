@@ -1,8 +1,25 @@
 import styled from 'styled-components'
 
   export const Container = styled.div`
-    gap: 32px;
     display: grid;
+    gap: 32px;
+
+    
+    
+
+    @media (max-width: 1200px) {
+      grid-template-columns: 1fr 1fr 1fr;
+    }
+
+    @media (max-width: 920px) {
+      grid-template-columns: 1fr 1fr;
+      max-width: 904px;
+    }
+
+    @media (max-width: 506px) {
+      grid-template-columns: 1fr;
+    }
+
     grid-template-columns: 1fr 1fr 1fr 1fr;
     margin: 32px 0 74px;
   `;

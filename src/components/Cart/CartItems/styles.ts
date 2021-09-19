@@ -7,6 +7,12 @@ export const Container = styled.div`
 
 export const CartItemContainer = styled.div`
   display: grid;
+
+  @media (max-width: 720px) {
+    grid-template-columns: 1fr 1.5fr;
+    height: auto;
+  }
+
   grid-template-columns: 256px auto;
   margin-bottom: 16px;
   height: 211px;
@@ -18,11 +24,43 @@ export const CartItemContainer = styled.div`
 `;
 
 export const ImageSide = styled.div`
+  @media (max-width: 720px) {
+    width: 100%;
+    height: 100%;
+    /* margin-bottom: 10px; */
+
+    div, img {
+      width: 100% !important;
+      height: 100%;
+    }
+  }
+
+  &>span>span {
+    display: block;
+  }
+
   display: flex;
   min-width:  256px;
 `;
 
 export const CartItemContent = styled.div`
+
+  @media (max-width: 720px) {
+    padding-bottom: 20px;
+    div {
+      font-size: 16px !important;
+    }
+
+    &>div:last-child {
+      align-items: flex-start;
+      justify-content: flex-start;
+      flex-direction: column;
+    }
+
+    &>p {
+      display: none;
+    }
+  }
 
   display: flex;
   flex-direction: column;
@@ -39,6 +77,10 @@ export const CartItemContent = styled.div`
     font-weight: 300;
     font-size: 20px;
 
+    &>div>svg {
+      cursor: pointer
+    }
+
     span {
       font-weight: 600;
       font-size: 16px;
@@ -52,6 +94,7 @@ export const CartItemContent = styled.div`
     }
 
     &>div>select {
+
       background-color: transparent;
       border: none;
       

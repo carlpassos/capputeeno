@@ -9,57 +9,107 @@ import {
 
 import TrashIcon from '../../../../public/trash.svg'
 import { formatPrice } from '../../../utils/formatPrice'
+import { ProductData } from '../../../services/hooks/useCart'
+import { useContext } from 'react'
+import { cartContext } from '../../../context/cartContext'
+import Skeleton from 'react-loading-skeleton'
 
-const productImageLoader = ({ src, width, quality }) => {
-  return `/${src}?w=${width}&q=${quality || 75}`
+const selectOptions = ["selectKey1", "selectKey2", "selectKey3", "selectKey4", "selectKey5","selectKey6","selectKey7","selectKey8","selectKey9","selectKey10"]
+
+interface CartItemsProps {
+  isLoading: boolean;
+  isFetching: boolean;
+  productList: ProductData[]
 }
 
-const cartItems = [
-  {name: 'nome do item 1'},
-  {name: 'nome do item 2'},
-  {name: 'nome do item 3'},
-  {name: 'nome do item 4'},
-]
+export function CartItems({
+  isLoading,
+  isFetching,
+  productList,
+}: CartItemsProps){
+  const { removeFromCart, updateCartProduct, cartInfo } = useContext(cartContext)
 
-export function CartItems(){
   return (
     <Container>
-      {cartItems.map(item => (
-        <CartItemContainer key={item.name}>
-          <ImageSide>
-          <Image
-              loader={productImageLoader}
-              src="products/canecas/caneca_01.jpg"
-              alt={item.name}
-              width={356}
-              height={211}
-              objectFit="cover"
-            />
-          </ImageSide>
-          <CartItemContent>
-            <div>
-              Caneca de cerâmica rústica
-              <TrashIcon />
-            </div>
-            <p>
-              Aqui vem um texto descritivo do produto, esta caixa de texto servirá
-              apenas de exemplo para que simule algum texto que venha a ser inserido
-              nesse campo, descrevendo tal produto.
-            </p>
-            <div>
-            <div className="qtdSelect">
-              <select name="select">
-                <option value="valor1">1</option>
-                <option value="valor2" selected>1</option>
-                <option value="valor3">1</option>
-              </select>
-            </div>
-            <span>{formatPrice(40)}</span>
-            </div>
-          </CartItemContent>
-           
-        </CartItemContainer>
-      ))}
+      {!productList ?
+        <div>Aguardando produtos...</div> :
+      <>
+        {
+          productList.map(item => {
+
+          const productOnCart = cartInfo.products.find(product => product.id === item.id)
+          
+          if(!productOnCart) return
+          
+          return (
+            <CartItemContainer key={item.name}>
+            <ImageSide>
+            {isLoading ?
+              <Skeleton width={256} height={211} />
+              :
+              <Image
+                src={item.imageUrl}
+                alt={item.name}
+                width={356}
+                height={211}
+                objectFit="cover"
+              />
+            }
+            
+            </ImageSide>
+            <CartItemContent>
+              <div>
+                {isLoading ?
+                  <Skeleton width={200} />
+                  :
+                  <>{item.name}</>
+                }
+                
+                <div onClick={() => removeFromCart(item.id)}>
+                  <TrashIcon />
+                </div>
+              </div>
+              <p>
+              {isLoading ?
+                <Skeleton count={3} width="100%" />
+                :
+                <>{item.description}</>
+              }
+              </p>
+              <div>
+              {isFetching ?
+                <Skeleton width={70} height={40} />
+                :
+                <div className="qtdSelect">
+                  <select name="select" onChange={e => updateCartProduct(item.id, Number(e.currentTarget.value))}>
+                    {selectOptions.map((option, index )=> (
+                      <option
+                        key={option}
+                        value={index + 1}
+                        selected={(index + 1) === item.count}
+                      >
+                        {index + 1}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+              } 
+              <span>
+                {isFetching ?
+                  <Skeleton width={65} />
+                  :
+                  <>{formatPrice(item.price * item.count)}</>
+                }
+                
+              </span>
+              </div>
+            </CartItemContent>
+            
+          </CartItemContainer>
+          )
+        })}
+      </>
+      }
     </Container>
   )
 }

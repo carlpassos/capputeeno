@@ -11,6 +11,10 @@ import styled from 'styled-components';
   `;
 
   export const Header = styled.header`
+    @media (max-width: 1120px) {
+      padding: 0 25px;
+    }
+
     display: flex;
     justify-content: center;
 
@@ -79,6 +83,10 @@ import styled from 'styled-components';
 
   export const Content = styled.div`
     padding: 34px 0px;
+
+    @media (max-width: 1200px) {
+      padding: 34px 20px
+    }
 
     max-height: 100%;
     height: 1000px;

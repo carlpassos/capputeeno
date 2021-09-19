@@ -1,6 +1,11 @@
 import styled from 'styled-components';
 
 export const Container = styled.div`
+
+  @media (max-width: 720px) {
+    display: none;
+  }
+
   display: flex;
   justify-content: space-between;
   align-items: center;

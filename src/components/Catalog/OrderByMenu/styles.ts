@@ -5,6 +5,10 @@ import styled from 'styled-components';
   }
 
   export const Container = styled.div<DropDownProps>`
+
+    @media (max-width: 720px) {
+      align-self: flex-end;
+    }
     display: flex;
     align-items: center;
     justify-content: center;
