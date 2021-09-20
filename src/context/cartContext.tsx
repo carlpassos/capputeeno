@@ -4,8 +4,10 @@ import { toast, ToastOptions } from 'react-toastify';
 import { useRouter } from "next/router";
 import api from "../services/api";
 import { print } from 'graphql';
-import { UPDATE_PRODUCT } from "../services/graphql/cart";
+import { GET_PRODUCT, UPDATE_PRODUCT } from "../services/graphql/cart";
 import { products } from "../utils/products";
+import { useMutation } from "react-query";
+import { queryClient } from "../services/queryClient";
 
 interface CartProviderProps {
   children: ReactNode;
@@ -83,9 +85,40 @@ export function CartProvider({ children }: CartProviderProps) {
   const [cartInfo, setCartInfo] = useState<CartInfoProps>(initialCart);
   const [loadingCartInfo, setLoadingCartInfo] = useState<boolean>(true);
 
-  // const makePurchase = useMutation(async (product: cartProductData) => {
-  //   const response = await 
-  // })
+  const editProductSales = useMutation(async () => {
+    await cartInfo.products.map(async (product) => {
+      await api.post('', {
+        query: print(GET_PRODUCT),
+        variables: {
+          id: product.id
+        }
+      }).then(async response => {
+        const { sales } = response.data.data.Product
+        await api.post('' , {
+          query: print(UPDATE_PRODUCT),
+          variables: {
+            id: product.id,
+            sales: sales + product.count
+          }
+        }).then(response => {
+          console.log(response.data.data.updateProduct)
+        }).catch(err => {
+          console.log(err)
+          toast.error("Não foi possível fazer a compra", toastOptions )
+        })
+      })
+    })
+
+    
+  }, {
+    onSuccess: () => {
+      queryClient.invalidateQueries()
+      setCartInfo({products: [], count: 0})
+      destroyCookie(null, '[CAPPUTEENO] Cart')
+      toast.success("Compra realizada com sucesso", toastOptions )
+      router.push('/')
+    }
+  })
 
 
 
@@ -203,26 +236,7 @@ export function CartProvider({ children }: CartProviderProps) {
   }
 
   async function handleBuy() {
-    try {
-    await cartInfo.products.map(async (product) => {
-     await api.post('/' , {
-        query: print(UPDATE_PRODUCT),
-        variables: {
-          id: product.id,
-          sales: product.count
-        }
-      }).catch(() => console.log('update product failure'))
-    })
-    } catch {
-      toast.error("Não foi possível fazer a compra", toastOptions )
-      return
-    }
-    setCartInfo({products: [], count: 0})
-    destroyCookie(null, '[CAPPUTEENO] Cart')
-    toast.success("Compra realizada com sucesso", toastOptions )
-    router.push('/')
-
-    return    
+      await editProductSales.mutateAsync();      
   }
 
   return (

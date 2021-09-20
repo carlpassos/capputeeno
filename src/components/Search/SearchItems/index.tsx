@@ -37,7 +37,7 @@ export function SearchItems({
           </div> :
           productList.map(item => {
           return (
-            <CartItemContainer key={item.name}>
+            <CartItemContainer key={item.id}>
             <ImageSide>
             {isLoading ?
               <Skeleton width={256} height={211} />
