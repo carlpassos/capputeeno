@@ -8,6 +8,7 @@ import {
 } from '../global/styles/pages/home'
 import { useState } from 'react'
 import { useRouter } from 'next/router'
+import Head from 'next/head'
 
 export type filterDataProp = "mugs" | "t-shirts" | "all"
 export type orderDataProp = 0 | 1 | 2 | 3 | 4
@@ -41,6 +42,10 @@ export default function Home() {
   }
 
   return (
+    <>
+    <Head>
+      <title>Capputeeno - Home</title>
+    </Head>
     <Container>
       <FilterSection>
         <ProductTypeNav>
@@ -58,5 +63,6 @@ export default function Home() {
       </FilterSection>
       <ProductCatalog filter={filterOption} order={order}/>
     </Container>
+    </>
   )
 }

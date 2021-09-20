@@ -1,7 +1,7 @@
 
+import Head from 'next/head'
 import { useContext, useEffect, useState } from 'react'
 import Skeleton from 'react-loading-skeleton'
-import { isFloat32Array } from 'util/types'
 import { BackButton } from '../../components/BackButton'
 import { CartItems } from '../../components/Cart/CartItems'
 import { cartContext } from '../../context/cartContext'
@@ -41,6 +41,10 @@ export default function Cart() {
   
 
   return (
+    <>
+    <Head>
+      <title>Capputeeno - carrinho</title>
+    </Head>
     <Container>
       {error || cartInfo.products.length === 0 ?
         <CartContent>
@@ -111,5 +115,6 @@ export default function Cart() {
         </>
       }
     </Container>
+    </>
   )
 }

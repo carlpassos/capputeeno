@@ -1,3 +1,4 @@
+import Head from 'next/head'
 import { useRouter } from 'next/router';
 import Image from 'next/image';
 import { BackButton } from '../../components/BackButton';
@@ -35,6 +36,10 @@ export default function Product() {
   }
 
   return (
+    <>
+    <Head>
+      <title>Capputeeno - Pagina de produto</title>
+    </Head>
     <Container>
       <SkeletonTheme color="#d7d7d7" highlightColor="#e1e1e1">
         <BackButton />
@@ -103,5 +108,6 @@ export default function Product() {
           }
       </SkeletonTheme>
     </Container>
+    </>
   )
 }

@@ -1,3 +1,4 @@
+import Head from "next/head"
 import { useRouter } from "next/router"
 import { useEffect, useState } from "react"
 import { SearchItems } from "../../components/Search/SearchItems"
@@ -25,6 +26,10 @@ export default function SearchPage() {
   },[filterName])
 
   return (
+    <>
+    <Head>
+      <title>Capputeeno - Buscando por {filterName}</title>
+    </Head>
     <Container>
       <h3>Resultados de pesquisa</h3>
       <span>Resultado da busca: {filterName}...</span>
@@ -32,5 +37,6 @@ export default function SearchPage() {
         <SearchItems isFetching={isFetching} isLoading={isLoading} productList={data} />
       </div>
     </Container>
+    </>
   )
 }
