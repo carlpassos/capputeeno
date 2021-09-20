@@ -36,14 +36,14 @@ export function CartItems({
         <div>Aguardando produtos...</div> :
       <>
         {
-          productList.map(item => {
+          productList.map((item, index) => {
 
           const productOnCart = cartInfo.products.find(product => product.id === item.id)
           
           if(!productOnCart) return
           
           return (
-            <CartItemContainer key={item.name}>
+            <CartItemContainer data-cy={`cartItemContainer${index}`} key={item.name}>
             <ImageSide>
             {isLoading ?
               <Skeleton width={256} height={211} />
@@ -63,11 +63,11 @@ export function CartItems({
                 {isLoading ?
                   <Skeleton width={200} />
                   :
-                  <><Link href={`/product/${item.id}`}>{item.name}</Link></>
+                  <><Link href={`/product/${item.id}`} data-cy={`cartItemName${index}`}>{item.name}</Link></>
                 }
                 
                 <div onClick={() => removeFromCart(item.id)}>
-                  <TrashIcon />
+                  <TrashIcon data-cy={`cartItemTrash${index}`} />
                 </div>
               </div>
               <p>
@@ -82,10 +82,11 @@ export function CartItems({
                 <Skeleton width={70} height={40} />
                 :
                 <div className="qtdSelect">
-                  <select value={item.count} name="select" onChange={e => updateCartProduct(item.id, Number(e.currentTarget.value))}>
+                  <select data-cy={`cartItemSelect${index}`} value={item.count} name="select" onChange={e => updateCartProduct(item.id, Number(e.currentTarget.value))}>
                     {selectOptions.map((option, index )=> (
                       <option
                         key={option}
+                        data-cy={`cartItemSelectOption${index + 1}`}
                         value={index + 1}
                         // selected={(index + 1) === item.count}
                       >

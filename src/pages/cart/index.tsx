@@ -103,7 +103,7 @@ export default function Cart() {
               </div>
               {isFetching ?
                 <Skeleton width="100%" height={40} /> :
-                <BuyButton onClick={() => handleBuy()}>Finalizar a Compra</BuyButton>
+                <BuyButton data-cy="buyButton" onClick={() => handleBuy()}>Finalizar a Compra</BuyButton>
               }
               
 

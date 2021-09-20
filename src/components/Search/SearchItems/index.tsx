@@ -35,7 +35,7 @@ export function SearchItems({
           <div style={{marginTop: "20px", fontSize: "20px"}}>
             Nenhum produto encontrado {':('}
           </div> :
-          productList.map(item => {
+          productList.map((item, index) => {
           return (
             <CartItemContainer key={item.id}>
             <ImageSide>
@@ -53,7 +53,7 @@ export function SearchItems({
             
             </ImageSide>
             <CartItemContent>
-              <div>
+              <div data-cy={`searchedItemName${index}`}>
                 {isLoading ?
                   <Skeleton width={200} />
                   :

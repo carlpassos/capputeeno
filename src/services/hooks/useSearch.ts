@@ -1,6 +1,9 @@
 import { useQuery } from 'react-query'
 import {request, gql} from 'graphql-request'
 import { filterDataProp, orderDataProp } from '../../pages'
+import api from '../api'
+import { print } from 'graphql'
+import { GET_PRODUCTS_BY_NAME } from '../graphql/products'
 
 export type ProductData = {
   id: string;
@@ -14,24 +17,15 @@ export type ProductData = {
 
 async function getSearch(page: number, filter: string): Promise<ProductData[]> {
       const formatedFilter = filter !== "all" ? `, filter:{name: "${filter}"}` : ""
-      const response = await request(
-        process.env.API_URL,
-        gql`
-          query {
-            allProducts(perPage: 12, page: ${page - 1}${formatedFilter}) {
-              id
-              name
-              image_url
-              price_in_cents
-              description
-              category
-            }
-            _allProductsMeta (perPage: 12, page: ${page - 1}${formatedFilter}) {
-              count
-            }
-          }
-        `
-      )
+
+      const response = await api.post('', {
+        query: print(GET_PRODUCTS_BY_NAME),
+        variables: {
+          name: filter
+        }
+      }).then(response => {
+        return response.data.data
+      })
 
       const products = await response.allProducts.map(product => {
         return {

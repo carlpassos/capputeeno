@@ -23,11 +23,12 @@ export function SearchBar() {
     <form onSubmit={handleSubmit}>
       <Container>
         <input
+          data-cy="searchInput"
           value={searchInputValue}
           placeholder="Procurando por algo específico?"
           onChange={e => setSearchInputvalue(e.currentTarget.value)}
         />
-        <button  type="submit" aria-label="Botão de busca">
+        <button data-cy="searchButton"  type="submit" aria-label="Botão de busca">
           <SearchLoupe />
         </button>
       </Container>

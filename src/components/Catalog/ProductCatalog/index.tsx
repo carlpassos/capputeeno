@@ -60,10 +60,11 @@ export function ProductCatalog({filter = "all", order = 0}: ProductCatalogProps)
           onPageChange={changePage}
         />
         <Container>
-          {data.products.map(item => (
+          {data.products.map((item, index) => (
             <Link href={`/product/${item.id}`} key={item.id} passHref>
-              <ProductCard >
+              <ProductCard data-cy={`productCart${index}`}>
                   <Image
+                    data-cy={`productImage${index}`}
                     src={item.imageUrl}
                     alt={item.name}
                     width={256}

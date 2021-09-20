@@ -16,3 +16,15 @@ export const GET_PRODUCT = gql`
     }
   }
 `
+
+export const GET_FILTERED_PRODUCTS_BY_IDS = gql`
+  query getFilteredProducts($ids: [ID]!) {
+    allProducts(filter:{ids: $ids}){
+      id
+      name
+      image_url
+      description
+      price_in_cents
+    }
+  }
+`

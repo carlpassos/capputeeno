@@ -52,8 +52,8 @@ export default function Home() {
           <ul>
             {filterMenuOptions.map(item => {
               const response = item.category === filterOption
-            ? <li key={item.category} onClick={() => changeFilter(item.category)} className="current">{item.name}</li>
-            : <li key={item.category} onClick={() => changeFilter(item.category)}>{item.name}</li>
+            ? <li data-cy={`menuOption${item.category}`} key={item.category} onClick={() => changeFilter(item.category)} className="current">{item.name}</li>
+            : <li data-cy={`menuOption${item.category}`} key={item.category} onClick={() => changeFilter(item.category)}>{item.name}</li>
 
             return response
             })}

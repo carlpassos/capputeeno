@@ -1,5 +1,8 @@
 import { useQuery } from 'react-query'
 import {request, gql} from 'graphql-request'
+import api from '../api'
+import { print } from 'graphql'
+import { GET_PRODUCT_BY_ID } from '../graphql/products'
 
 type ProductData = {
   id: string;
@@ -20,22 +23,15 @@ async function getProduct(productId: string): Promise<ProductData> {
        
   if (productId !== "undefined") {
 
-  
-  const response = await request(
-      process.env.API_URL,
-      gql`
-        query {
-          Product(id: "${productId}") {
-            id
-            name
-            description
-            image_url
-            price_in_cents
-            category
-          }
-        }
-      `
-    )
+  const response = await api.post('', {
+    query: print(GET_PRODUCT_BY_ID),
+    variables: {
+      id: productId
+    }
+  }).then(response => {
+    console.log(response.data.data.Product)
+    return response.data.data
+  })
     const product = {
       id: response.Product.id,
       name: response.Product.name,

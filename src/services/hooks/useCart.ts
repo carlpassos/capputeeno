@@ -1,6 +1,9 @@
 import { useQuery } from 'react-query'
-import {request, gql} from 'graphql-request'
+// import {request, gql} from 'graphql-request'
 import {  CartInfoProps } from '../../context/cartContext'
+import api from '../api'
+import { print } from 'graphql'
+import { GET_FILTERED_PRODUCTS_BY_IDS } from '../graphql/cart'
 
 export type ProductData = {
   id: string;
@@ -18,24 +21,23 @@ export type ProductData = {
 async function getProducts(cartInfo: CartInfoProps): Promise<ProductData[]> {
 
   const productsIdArray = cartInfo.products.map(product => {
-    return `"${product.id}"`
+    return product.id
   })
-  
-  const response = await request(
-      process.env.API_URL,
-      gql`
-      query {
-        allProducts(filter:{ids: [${productsIdArray}]}) {
-          id
-          name
-          image_url
-          description
-          price_in_cents
-        }
-      }
-      `
-    )
-    const productList = response.allProducts.map(product => {
+
+  console.log(print(GET_FILTERED_PRODUCTS_BY_IDS))
+
+  const response = await api.post('', {
+    query: print(GET_FILTERED_PRODUCTS_BY_IDS),
+    variables: {
+      ids: productsIdArray
+    }
+  }).then( response => {
+    console.log('entrou aqui')
+    const { allProducts } = response.data.data
+
+    console.log(response.data)
+
+    const productList = allProducts.map(product => {
       
       const productFilter = cartInfo.products.find(cartProduct => cartProduct.id === product.id)
 
@@ -52,7 +54,24 @@ async function getProducts(cartInfo: CartInfoProps): Promise<ProductData[]> {
     })
 
     return productList
-  }
+  })
+
+  return response;
+  
+  // const response = await request(
+  //     process.env.API_URL,
+  //     gql`
+  //     query {
+  //       allProducts(filter:{ids: [${productsIdArray}]}) {
+  //         id
+  //         name
+  //         image_url
+  //         description
+  //         price_in_cents
+  //       }
+  //     }
+  //     `
+}
 
 
 export function useCart(cartInfo: CartInfoProps) {

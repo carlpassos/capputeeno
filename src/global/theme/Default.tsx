@@ -48,8 +48,8 @@ export function DefaultTheme({children}: DefaultProps) {
             <SearchBar />
             <Link href="/cart" passHref>
             <Cart>
-              <ShoppingBag />
-              {cartAmount > 0 && <span> {cartAmount} </span> }
+              <ShoppingBag data-cy="shoppingBag" />
+              {cartAmount > 0 && <span data-cy="shoppingBagCount"> {cartAmount} </span> }
             </Cart>
             </Link>
           </LeftSideElements>

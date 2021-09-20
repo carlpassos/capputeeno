@@ -5,7 +5,6 @@ import { useRouter } from "next/router";
 import api from "../services/api";
 import { print } from 'graphql';
 import { GET_PRODUCT, UPDATE_PRODUCT } from "../services/graphql/cart";
-import { products } from "../utils/products";
 import { useMutation } from "react-query";
 import { queryClient } from "../services/queryClient";
 

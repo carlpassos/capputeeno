@@ -43,18 +43,18 @@ export function CatalogPagination({
 
         {currentPage > (1 + siblingsCount) && (
           <>
-            <li onClick={() => onPageChange(1)}>1</li>
+            <li data-cy="paginationButton1" onClick={() => onPageChange(1)}>1</li>
             {currentPage > (2 + siblingsCount) && <span>...</span>}
           </>
         )}
 
         {previousPages.length > 0 && previousPages.map(page => {
-          return <li key={`previouspagekey${page}`} onClick={() => onPageChange(page)}>{page}</li>
+          return <li data-cy={`paginationButton${page}`} key={`previouspagekey${page}`} onClick={() => onPageChange(page)}>{page}</li>
         })}
-        <li onClick={() => onPageChange(currentPage)} className="current" >{currentPage}</li>
+        <li data-cy={`paginationButton${currentPage}`} onClick={() => onPageChange(currentPage)} className="current" >{currentPage}</li>
 
         {nextPages.length > 0 && nextPages.map(page => {
-          return <li key={`previouspagekey${page}`} onClick={() => onPageChange(page)}>{page}</li>
+          return <li data-cy={`paginationButton${page}`} key={`previouspagekey${page}`} onClick={() => onPageChange(page)}>{page}</li>
         })}
 
         {(currentPage + siblingsCount) < lastPage && (

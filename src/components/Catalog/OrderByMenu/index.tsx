@@ -33,14 +33,14 @@ export function OrderByMenu({
 
   return (
     <Container isOpened={isDropDownOpened}>
-      <div onClick={() => setIsDropDownOpened(!isDropDownOpened)} className="dropDownText">
+      <div data-cy={`${orderOptions[currentOrder].name}Menu`} onClick={() => setIsDropDownOpened(!isDropDownOpened)} className="dropDownText">
         {orderOptions[currentOrder].name} {!isDropDownOpened ? <IoIosArrowDown /> : <IoIosArrowUp />}
       </div>
       <DropDownMenu isOpened={isDropDownOpened}>
         <ul>
           {orderOptions.map((item, index) => {
             if (index === 0) return
-            return <li key={item.key} onClick={() => changeOrder(index)}>{item.name}</li>
+            return <li key={item.key} data-cy={`${item.name}OrderMenu`} onClick={() => changeOrder(index)}>{item.name}</li>
           })}
         </ul>
       </DropDownMenu>
