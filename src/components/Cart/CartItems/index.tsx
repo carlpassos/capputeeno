@@ -82,12 +82,12 @@ export function CartItems({
                 <Skeleton width={70} height={40} />
                 :
                 <div className="qtdSelect">
-                  <select name="select" onChange={e => updateCartProduct(item.id, Number(e.currentTarget.value))}>
+                  <select value={item.count} name="select" onChange={e => updateCartProduct(item.id, Number(e.currentTarget.value))}>
                     {selectOptions.map((option, index )=> (
                       <option
                         key={option}
                         value={index + 1}
-                        selected={(index + 1) === item.count}
+                        // selected={(index + 1) === item.count}
                       >
                         {index + 1}
                       </option>

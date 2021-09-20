@@ -21,6 +21,8 @@ export default function Cart() {
 
   const { cartInfo, handleBuy } = useContext(cartContext)
 
+  const [pageCartInfo, setPageCartInfo] = useState({products: [], count: 0})
+
   const {data, isLoading, error, isFetching, refetch} = useCart(cartInfo)
 
   const [productList, setProductList] = useState(data)
@@ -33,11 +35,11 @@ export default function Cart() {
       return total + (product.price * product.count);
     }, 0)
 
-    console.log(totalPrice)
-
     setTotalProductsPrice(totalPrice)
 
   }, [data, cartInfo, refetch]) 
+
+  useEffect(() => { setPageCartInfo(cartInfo) }, [cartInfo])
   
 
   return (
@@ -46,10 +48,10 @@ export default function Cart() {
       <title>Capputeeno - carrinho</title>
     </Head>
     <Container>
-      {error || cartInfo.products.length === 0 ?
+      {error || pageCartInfo.products.length === 0 ?
         <CartContent>
           <BackButton />
-          <h2>Carrinho</h2>
+          <h2>Seu Carrinho</h2>
           <p>{'O seu carrinho está vazio :('}</p>
         </CartContent> :
         <>
@@ -61,7 +63,7 @@ export default function Cart() {
               <p>
                 {isFetching ?
                   <Skeleton width={200} /> :
-                  <>{`Total (${cartInfo.count} produto${cartInfo.count > 1 ? 's' : ''}) `}<span>{formatPrice(totalProductsPrice)}</span></>
+                  <>{`Total (${pageCartInfo.count} produto${pageCartInfo.count > 1 ? 's' : ''}) `}<span>{formatPrice(totalProductsPrice)}</span></>
                 }
                 
               </p>

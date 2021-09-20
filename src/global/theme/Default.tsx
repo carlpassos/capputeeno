@@ -1,4 +1,4 @@
-import { ReactNode, useContext } from 'react'
+import { ReactNode, useContext, useEffect, useState } from 'react'
 import { ToastContainer } from 'react-toastify';
 
 import 'react-toastify/dist/ReactToastify.css';
@@ -27,7 +27,13 @@ interface DefaultProps {
 export function DefaultTheme({children}: DefaultProps) {
 
   const { getCartCount } = useContext(cartContext)
-  const cartCount = getCartCount()
+  const [cartAmount, setCartAmount] = useState(0)
+
+  // const cartCount = getCartCount()
+
+  useEffect(() => {
+    setCartAmount(getCartCount())
+  }, [getCartCount])
 
   return (
     <Container>
@@ -43,9 +49,7 @@ export function DefaultTheme({children}: DefaultProps) {
             <Link href="/cart" passHref>
             <Cart>
               <ShoppingBag />
-              <span>
-                {cartCount}
-              </span>
+              {cartAmount > 0 && <span> {cartAmount} </span> }
             </Cart>
             </Link>
           </LeftSideElements>

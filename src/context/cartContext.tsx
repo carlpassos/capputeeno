@@ -1,6 +1,6 @@
 import { createContext, ReactNode, useEffect, useState  } from "react";
 import { parseCookies, setCookie, destroyCookie } from 'nookies'
-import { toast } from 'react-toastify';
+import { toast, ToastOptions } from 'react-toastify';
 import { useRouter } from "next/router";
 import api from "../services/api";
 import { print } from 'graphql';
@@ -31,25 +31,27 @@ interface cartContextData {
   updateCartProduct: (id: string, count: number) => void;
 }
 
-  const addToCartNotify = () => toast.success("Produto adicionado no carrinho", {
-    position: "top-center",
-    autoClose: 3000,
-    hideProgressBar: false,
-    closeOnClick: true,
-    pauseOnHover: true,
-    draggable: true,
-    progress: undefined,
-  });
+  const toastOptions: ToastOptions =  {
+      position: "top-center",
+      autoClose: 3000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+  }
 
-  const buyNotify = () => toast.success("Compra realizada com sucesso!", {
-    position: "top-center",
-    autoClose: 3000,
-    hideProgressBar: false,
-    closeOnClick: true,
-    pauseOnHover: true,
-    draggable: true,
-    progress: undefined,
-  });
+  // const addToCartNotify = () => toast.success("Produto adicionado no carrinho", toastOptions );
+
+  // const buyNotify = () => toast.success("Compra realizada com sucesso!", {
+  //   position: "top-center",
+  //   autoClose: 3000,
+  //   hideProgressBar: false,
+  //   closeOnClick: true,
+  //   pauseOnHover: true,
+  //   draggable: true,
+  //   progress: undefined,
+  // });
 
   const removeFromCartNotify = () => toast.info('Produto Removido do carrinho', {
     position: "top-center",
@@ -100,7 +102,7 @@ export function CartProvider({ children }: CartProviderProps) {
   function addToCart(id: string) {
     const fidCartItem = cartInfo?.products?.find( cartItem => cartItem.id === id )
     if(!fidCartItem && cartInfo.products.length === 0) {
-      addToCartNotify()
+      toast.success("Produto adicionado no carrinho", toastOptions )
       setCartInfo({products: [{id, count: 1}], count: 1})
       setCookie(null, '[CAPPUTEENO] Cart', JSON.stringify({products: [{id, count: 1}], count: 1}), {
         maxAge: 30 * 24 * 60 * 60,
@@ -117,7 +119,7 @@ export function CartProvider({ children }: CartProviderProps) {
         products: [...newCartProducts],
         count: cartInfo.count + 1
       }
-      addToCartNotify()
+      toast.success("Produto adicionado no carrinho", toastOptions )
       setCartInfo(newCartInfo)
       setCookie(null, '[CAPPUTEENO] Cart', JSON.stringify(newCartInfo), {
         maxAge: 30 * 24 * 60 * 60,
@@ -137,7 +139,7 @@ export function CartProvider({ children }: CartProviderProps) {
       products: [...newCartProducts],
       count: cartInfo.count + 1
     }
-      addToCartNotify()
+      toast.success("Produto adicionado no carrinho", toastOptions )
       setCartInfo(newCartInfo)
       setCookie(null, '[CAPPUTEENO] Cart', JSON.stringify(newCartInfo), {
         maxAge: 30 * 24 * 60 * 60,
@@ -160,7 +162,7 @@ export function CartProvider({ children }: CartProviderProps) {
       products: [...newCartProducts],
       count: cartInfo.count - newCartCount
     }
-      removeFromCartNotify()
+      toast.info("Produto removido do carrinho", toastOptions )
       setCartInfo(newCartInfo)
       setCookie(null, '[CAPPUTEENO] Cart', JSON.stringify(newCartInfo), {
         maxAge: 30 * 24 * 60 * 60,
@@ -190,7 +192,7 @@ export function CartProvider({ children }: CartProviderProps) {
       count: newCartcount
     }
 
-      updateCartNotify()
+    toast.info("Produto alterado", toastOptions )
       setCartInfo(newCartInfo)
       setCookie(null, '[CAPPUTEENO] Cart', JSON.stringify(newCartInfo), {
         maxAge: 30 * 24 * 60 * 60,
@@ -201,18 +203,23 @@ export function CartProvider({ children }: CartProviderProps) {
   }
 
   async function handleBuy() {
-    await cartInfo.products.map(product => {
-      api.post('/' , {
+    try {
+    await cartInfo.products.map(async (product) => {
+     await api.post('/' , {
         query: print(UPDATE_PRODUCT),
         variables: {
           id: product.id,
           sales: product.count
         }
-      })
+      }).catch(() => console.log('update product failure'))
     })
+    } catch {
+      toast.error("Não foi possível fazer a compra", toastOptions )
+      return
+    }
     setCartInfo({products: [], count: 0})
     destroyCookie(null, '[CAPPUTEENO] Cart')
-    buyNotify()
+    toast.success("Compra realizada com sucesso", toastOptions )
     router.push('/')
 
     return    

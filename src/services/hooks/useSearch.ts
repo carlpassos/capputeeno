@@ -14,22 +14,6 @@ export type ProductData = {
 
 async function getSearch(page: number, filter: string): Promise<ProductData[]> {
       const formatedFilter = filter !== "all" ? `, filter:{name: "${filter}"}` : ""
-      console.log(filter)
-      console.log(`
-      query {
-        allProducts(perPage: 12, page: ${page - 1}${formatedFilter}) {
-          id
-          name
-          image_url
-          price_in_cents
-          description
-          category
-        }
-        _allProductsMeta (perPage: 12, page: ${page - 1}${formatedFilter}) {
-          count
-        }
-      }
-    `)
       const response = await request(
         process.env.API_URL,
         gql`
