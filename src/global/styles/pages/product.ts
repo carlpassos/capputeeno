@@ -29,6 +29,7 @@ import styled from 'styled-components'
 
     color: ${({theme}) => theme.colors.texts.dark};
 
+
     &>span {
       display: flex;
       justify-self: flex-end;
@@ -44,13 +45,13 @@ import styled from 'styled-components'
       margin-bottom: 12px;
     }
 
-    &>div {
-      margin-bottom: 58px;
-
-      h2 {
+    h2 {
         font-size: 32px;
         font-weight: 300;
       }
+
+    &>div {
+      margin-bottom: 58px;
 
       span {
         display: inline-block;

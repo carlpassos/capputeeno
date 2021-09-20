@@ -4,7 +4,7 @@ import NextDocument, { Html, Head, Main, NextScript} from "next/document"
 import { ServerStyleSheet } from 'styled-components'
 
 interface MyClassProps {
-  styleTags: string;
+  styleTags: any;
 }
 
 export default class Document extends NextDocument<MyClassProps> {
