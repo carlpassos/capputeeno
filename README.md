@@ -12,6 +12,8 @@ Caso tenha alguma dúvida, estou disponíveis no email *carlospassos93@gmail.com
 
 ![preview](https://user-images.githubusercontent.com/47759447/133943655-82cc0852-c13b-4d31-a99b-452d684138c9.gif)
 
+DEMO: [https://capputeeno.carlospassos.com.br/](https://capputeeno.carlospassos.com.br/)
+
 Objetos executados no desafio:
 - [x] Catálogo de produtos com paginação
 - [x] Filtragem produtos por categoria
