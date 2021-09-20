@@ -1,6 +1,11 @@
 import { createContext, ReactNode, useEffect, useState  } from "react";
-import { parseCookies, setCookie } from 'nookies'
+import { parseCookies, setCookie, destroyCookie } from 'nookies'
 import { toast } from 'react-toastify';
+import { useRouter } from "next/router";
+import api from "../services/api";
+import { print } from 'graphql';
+import { UPDATE_PRODUCT } from "../services/graphql/cart";
+import { products } from "../utils/products";
 
 interface CartProviderProps {
   children: ReactNode;
@@ -21,11 +26,22 @@ interface cartContextData {
   loadingCartInfo: boolean,
   getCartCount: () => number;
   addToCart: (id: string) => void;
+  handleBuy: () => void;
   removeFromCart: (id: string) => void;
   updateCartProduct: (id: string, count: number) => void;
 }
 
   const addToCartNotify = () => toast.success("Produto adicionado no carrinho", {
+    position: "top-center",
+    autoClose: 3000,
+    hideProgressBar: false,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: true,
+    progress: undefined,
+  });
+
+  const buyNotify = () => toast.success("Compra realizada com sucesso!", {
     position: "top-center",
     autoClose: 3000,
     hideProgressBar: false,
@@ -60,9 +76,15 @@ export const cartContext = createContext({} as cartContextData);
 export function CartProvider({ children }: CartProviderProps) {
   const cookies = parseCookies()
   const initialCart = cookies["[CAPPUTEENO] Cart"] ? JSON.parse(cookies["[CAPPUTEENO] Cart"]) : {products: [], count: 0}
+  const router = useRouter()
 
   const [cartInfo, setCartInfo] = useState<CartInfoProps>(initialCart);
   const [loadingCartInfo, setLoadingCartInfo] = useState<boolean>(true);
+
+  // const makePurchase = useMutation(async (product: cartProductData) => {
+  //   const response = await 
+  // })
+
 
 
   useEffect(() => {
@@ -149,7 +171,6 @@ export function CartProvider({ children }: CartProviderProps) {
   }
 
   function updateCartProduct(id: string, count: number) {
-    let newProductCount = 0;
     const newProducts = cartInfo.products.map(product => {
       if (product.id === id) {
         return {
@@ -179,10 +200,29 @@ export function CartProvider({ children }: CartProviderProps) {
 
   }
 
+  async function handleBuy() {
+    await cartInfo.products.map(product => {
+      api.post('/' , {
+        query: print(UPDATE_PRODUCT),
+        variables: {
+          id: product.id,
+          sales: product.count
+        }
+      })
+    })
+    setCartInfo({products: [], count: 0})
+    destroyCookie(null, '[CAPPUTEENO] Cart')
+    buyNotify()
+    router.push('/')
+
+    return    
+  }
+
   return (
     <cartContext.Provider value={{
       cartInfo,
       loadingCartInfo,
+      handleBuy,
       getCartCount,
       addToCart,
       removeFromCart,

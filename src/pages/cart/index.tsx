@@ -19,7 +19,7 @@ import {
 
 export default function Cart() {
 
-  const { cartInfo } = useContext(cartContext)
+  const { cartInfo, handleBuy } = useContext(cartContext)
 
   const {data, isLoading, error, isFetching, refetch} = useCart(cartInfo)
 
@@ -101,7 +101,7 @@ export default function Cart() {
               </div>
               {isFetching ?
                 <Skeleton width="100%" height={40} /> :
-                <BuyButton>Finalizar a Compra</BuyButton>
+                <BuyButton onClick={() => handleBuy}>Finalizar a Compra</BuyButton>
               }
               
 
