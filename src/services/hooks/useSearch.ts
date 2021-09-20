@@ -2,29 +2,34 @@ import { useQuery } from 'react-query'
 import {request, gql} from 'graphql-request'
 import { filterDataProp, orderDataProp } from '../../pages'
 
-type Products = {
+export type ProductData = {
   id: string;
   name: string;
   imageUrl: string;
   price: number;
+  description: string;
   category: string;
-}
-
-type getSearchResponse = {
-  products: Products[],
-  count: number,
-}
-
-const orderData = {
-  1: `sortField: "created_at", sortOrder: "DESC"`,
-  2: `sortField: "price_in_cents", sortOrder: "DESC"`,
-  3: `sortField: "price_in_cents", sortOrder: "ASC"`,
-  4: `sortField: "sales", sortOrder: "DESC"`,
 }
   
 
-async function getSearch(page: number, filter: filterDataProp): Promise<getSearchResponse> {
-      const formatedFilter = filter !== "all" ? `, filter:{name_neq: "${filter}"}` : ""
+async function getSearch(page: number, filter: string): Promise<ProductData[]> {
+      const formatedFilter = filter !== "all" ? `, filter:{name: "${filter}"}` : ""
+      console.log(filter)
+      console.log(`
+      query {
+        allProducts(perPage: 12, page: ${page - 1}${formatedFilter}) {
+          id
+          name
+          image_url
+          price_in_cents
+          description
+          category
+        }
+        _allProductsMeta (perPage: 12, page: ${page - 1}${formatedFilter}) {
+          count
+        }
+      }
+    `)
       const response = await request(
         process.env.API_URL,
         gql`
@@ -34,6 +39,7 @@ async function getSearch(page: number, filter: filterDataProp): Promise<getSearc
               name
               image_url
               price_in_cents
+              description
               category
             }
             _allProductsMeta (perPage: 12, page: ${page - 1}${formatedFilter}) {
@@ -48,6 +54,7 @@ async function getSearch(page: number, filter: filterDataProp): Promise<getSearc
           id: product.id,
           name: product.name,
           imageUrl: product.image_url,
+          description: product.description,
           price: product.price_in_cents / 100
         }
       })
@@ -56,9 +63,9 @@ async function getSearch(page: number, filter: filterDataProp): Promise<getSearc
     }
 
 
-export function useProducts(page: number, filter: filterDataProp, order: orderDataProp) {
+export function useSearch(page: number, filter: string) {
 
-  return useQuery(['products', page, filter, order], () => getSearch(page, filter),{
+  return useQuery(['products', page, filter], () => getSearch(page, filter),{
     staleTime: 1000 * 60 * 10, // 10 minutes
   })
 }

@@ -7,7 +7,7 @@ import Link from 'next/link'
 
 import Logo from '../../../public/logo-capputeeno.svg'
 import ShoppingBag from '../../../public/shopping-bag.svg'
-import { SearchBar } from '../../components/SearchBar'
+import { SearchBar } from '../../components/Search/SearchBar'
 
 import {
   Container,
